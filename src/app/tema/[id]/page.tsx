@@ -17,12 +17,39 @@ export default async function QuizPage({ params }: PageProps) {
   }
 
   return (
-    <main>
-      <h1>{quiz.title}</h1>
+    <main className="min-h-screen px-6 py-12">
+      <section className="mx-auto flex w-full max-w-4xl flex-col gap-8">
+        <header className="space-y-2 text-center">
+          <p className="text-sm font-medium uppercase tracking-widest">
+            Cuestionario
+          </p>
 
-      <p>Aquí irá el cuestionario.</p>
+          <h1 className="text-4xl font-bold">{quiz.title}</h1>
 
-      <p>ID del tema: {quiz.id}</p>
+          <p className="">
+            Pon a prueba tus conocimientos respondiendo las preguntas de este
+            tema.
+          </p>
+        </header>
+
+        <div className="rounded-xl border border-slate-200 p-6 shadow-sm">
+          <h2 className="mb-4 text-xl font-semibold">Información</h2>
+
+          <div className="space-y-2">
+            <p>
+              <span className="font-medium">Tema:</span> {quiz.title}
+            </p>
+
+            <p>
+              <span className="font-medium">ID:</span> {quiz.id}
+            </p>
+          </div>
+        </div>
+
+        <div className="rounded-xl border border-dashed border-slate-300 p-8 text-center">
+          Aquí aparecerán las preguntas del cuestionario.
+        </div>
+      </section>
     </main>
   );
 }
