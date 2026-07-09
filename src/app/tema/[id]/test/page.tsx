@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import { quizRegistry } from "@/data/quizzes/registry";
+import Quiz from "@/components/quiz/Quiz";
 
 type PageProps = {
   params: Promise<{
@@ -16,6 +16,8 @@ export default async function QuizPage({ params }: PageProps) {
   if (!quiz) {
     notFound();
   }
+
+  const quizData = (await quiz.load()).default;
 
   return (
     <main className="min-h-screen px-6 py-12">
@@ -38,21 +40,17 @@ export default async function QuizPage({ params }: PageProps) {
 
           <div className="space-y-2">
             <p>
-              <span className="font-medium">Tema:</span>
-              {quiz.title}
+              <span className="font-medium">Tema:</span> {quizData.title}
             </p>
 
             <p>
-              <span className="font-medium">ID:</span>
-              {id}
+              <span className="font-medium">ID:</span> {quizData.id}
             </p>
           </div>
         </div>
 
         <div className="rounded-xl border border-dashed border-slate-300 p-8 text-center">
-          <Link href={`${id}/test`}>
-            <h2>Comenzar test</h2>
-          </Link>
+          <Quiz quiz={quizData} />
         </div>
       </section>
     </main>
