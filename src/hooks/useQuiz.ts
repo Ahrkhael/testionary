@@ -17,6 +17,9 @@ export default function useQuiz(quiz: Quiz) {
   return {
     currentIndex,
     currentQuestion,
+    totalQuestions: quiz.questions.length,
+    canGoNext: currentIndex < quiz.questions.length - 1,
+    canGoPrevious: currentIndex > 0,
     nextQuestion,
     previousQuestion,
   };

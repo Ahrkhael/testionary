@@ -2,6 +2,7 @@
 
 import type { Quiz } from "@/types/quiz";
 import Question from "./Question";
+import Navigation from "./Navigation";
 import useQuiz from "@/hooks/useQuiz";
 
 interface QuizProps {
@@ -9,8 +10,15 @@ interface QuizProps {
 }
 
 export default function Quiz({ quiz }: QuizProps) {
-  const { currentQuestion, currentIndex, nextQuestion, previousQuestion } =
-    useQuiz(quiz);
+  const {
+    currentQuestion,
+    currentIndex,
+    totalQuestions,
+    canGoNext,
+    canGoPrevious,
+    nextQuestion,
+    previousQuestion,
+  } = useQuiz(quiz);
 
   return (
     <>
@@ -18,7 +26,14 @@ export default function Quiz({ quiz }: QuizProps) {
 
       <Question question={currentQuestion} />
 
-      {/*<Navigation onNext={nextQuestion} onPrevious={previousQuestion} />*/}
+      <Navigation
+        totalQuestions={totalQuestions}
+        currentIndex={currentIndex}
+        canGoNext={canGoNext}
+        canGoPrevious={canGoPrevious}
+        onNext={nextQuestion}
+        onPrevious={previousQuestion}
+      />
     </>
   );
 }
