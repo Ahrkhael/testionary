@@ -1,39 +1,24 @@
 "use client";
 
 import type { Quiz } from "@/types/quiz";
+
+import { QuizProvider } from "./QuizContext";
+
 import Question from "./Question";
 import Navigation from "./Navigation";
-import useQuiz from "@/hooks/useQuiz";
 
 interface QuizProps {
   quiz: Quiz;
 }
 
 export default function Quiz({ quiz }: QuizProps) {
-  const {
-    currentQuestion,
-    currentIndex,
-    totalQuestions,
-    canGoNext,
-    canGoPrevious,
-    nextQuestion,
-    previousQuestion,
-  } = useQuiz(quiz);
-
   return (
-    <>
+    <QuizProvider quiz={quiz}>
       {/*<Progress />*/}
 
-      <Question question={currentQuestion} />
+      <Question />
 
-      <Navigation
-        totalQuestions={totalQuestions}
-        currentIndex={currentIndex}
-        canGoNext={canGoNext}
-        canGoPrevious={canGoPrevious}
-        onNext={nextQuestion}
-        onPrevious={previousQuestion}
-      />
-    </>
+      <Navigation />
+    </QuizProvider>
   );
 }

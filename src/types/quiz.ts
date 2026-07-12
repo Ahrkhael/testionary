@@ -4,6 +4,8 @@ export interface Answer {
   isCorrect: boolean;
 }
 
+export type AnswerState = "default" | "selected" | "correct" | "incorrect";
+
 export interface Question {
   id: number;
   text: string;
