@@ -1,25 +1,20 @@
-interface NavigationProps {
-  currentIndex: number;
-  totalQuestions: number;
-  canGoNext: boolean;
-  canGoPrevious: boolean;
-  onNext: () => void;
-  onPrevious: () => void;
-}
+import { useQuizContext } from "./QuizContext";
 
-export default function Navigation({
-  currentIndex,
-  totalQuestions,
-  canGoNext,
-  canGoPrevious,
-  onNext,
-  onPrevious,
-}: NavigationProps) {
+export default function Navigation() {
+  const {
+    nextQuestion,
+    previousQuestion,
+    currentIndex,
+    totalQuestions,
+    canGoPrevious,
+    canGoNext,
+  } = useQuizContext();
+
   return (
     <div className="mt-8 flex items-center justify-between">
       <button
         type="button"
-        onClick={onPrevious}
+        onClick={previousQuestion}
         disabled={!canGoPrevious}
         className="rounded-lg border px-4 py-2 disabled:cursor-not-allowed disabled:opacity-50"
       >
@@ -32,7 +27,7 @@ export default function Navigation({
 
       <button
         type="button"
-        onClick={onNext}
+        onClick={nextQuestion}
         disabled={!canGoNext}
         className="rounded-lg border px-4 py-2 disabled:cursor-not-allowed disabled:opacity-50"
       >
