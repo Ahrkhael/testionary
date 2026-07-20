@@ -3,6 +3,12 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  --font-color-menu-secondary: #3b82f6;
+
+  --background-navbar-rgb: #f3f4f6;
+
+  --navbar-height: 7dvh;
 }
 
 @theme inline {
@@ -16,6 +22,12 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+
+    --font-color-menu-secondary: #3b82f6;
+
+    --background-navbar-rgb: #1e293b;
+
+    --navbar-height: 7dvh;
   }
 }
 
