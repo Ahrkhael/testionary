@@ -2,6 +2,8 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { quizRegistry } from "@/data/quizzes/registry";
 
+import StartQuizButton from "@/components/quiz/StartQuizButton";
+
 type PageProps = {
   params: Promise<{
     id: string;
@@ -56,9 +58,7 @@ export default async function QuizPage({ params }: PageProps) {
           </div>
 
           <div className="rounded-xl border border-dashed border-slate-300 p-8 text-center">
-            <Link href={`${id}/test`}>
-              <h2>Comenzar test</h2>
-            </Link>
+            <StartQuizButton id={id} />
           </div>
         </section>
       </main>
