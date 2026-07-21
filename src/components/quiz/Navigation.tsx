@@ -1,3 +1,5 @@
+"use client";
+
 import { useQuizContext } from "./QuizContext";
 
 export default function Navigation() {

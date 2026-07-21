@@ -1,15 +1,20 @@
 import { notFound } from "next/navigation";
 import { quizRegistry } from "@/data/quizzes/registry";
 import Quiz from "@/components/quiz/Quiz";
+import prepareQuiz from "@/utils/prepareQuiz";
 
 type PageProps = {
   params: Promise<{
     id: string;
   }>;
+  searchParams: Promise<{
+    seed?: string;
+  }>;
 };
 
-export default async function QuizPage({ params }: PageProps) {
+export default async function QuizPage({ params, searchParams }: PageProps) {
   const { id } = await params;
+  const { seed } = await searchParams;
 
   const quiz = quizRegistry[id as keyof typeof quizRegistry];
 
@@ -17,7 +22,13 @@ export default async function QuizPage({ params }: PageProps) {
     notFound();
   }
 
+  if (!seed) {
+    notFound();
+  }
+
   const quizData = (await quiz.load()).default;
+
+  const preparedQuiz = prepareQuiz(quizData, seed);
 
   return (
     <div className="flex flex-col flex-1 items-center justify-center font-sans">
@@ -37,7 +48,7 @@ export default async function QuizPage({ params }: PageProps) {
           </header>
 
           <div className="rounded-xl border border-dashed border-slate-300 p-8 text-center">
-            <Quiz quiz={quizData} />
+            <Quiz quiz={preparedQuiz} />
           </div>
         </section>
       </main>
