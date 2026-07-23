@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import { quizRegistry } from "@/data/quizzes/registry";
 
 import StartQuizButton from "@/components/quiz/StartQuizButton";

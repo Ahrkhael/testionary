@@ -3,9 +3,21 @@
 import Link from "next/link";
 
 export default function StartQuizButton({ id }: { id: string }) {
-  const seed = crypto.randomUUID();
+  function handleStart() {
+    const seed = crypto.randomUUID();
 
-  localStorage.setItem(`quiz-${id}-seed`, seed);
+    localStorage.setItem(`quiz-${id}-seed`, seed);
+    localStorage.setItem(`quiz-${id}-startedAt`, Date.now().toString());
+  }
 
-  return <Link href={`${id}/test?seed=${seed}`}>Comenzar test</Link>;
+  const seed =
+    typeof window !== "undefined"
+      ? localStorage.getItem(`quiz-${id}-seed`)
+      : "";
+
+  return (
+    <Link href={`${id}/test?seed=${seed}`} onClick={handleStart}>
+      Comenzar test
+    </Link>
+  );
 }
