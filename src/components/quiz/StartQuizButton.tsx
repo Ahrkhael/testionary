@@ -1,23 +1,24 @@
 "use client";
 
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-export default function StartQuizButton({ id }: { id: string }) {
-  function handleStart() {
-    const seed = crypto.randomUUID();
+interface StartQuizButtonProps {
+  id: string;
+}
 
-    localStorage.setItem(`quiz-${id}-seed`, seed);
-    localStorage.setItem(`quiz-${id}-startedAt`, Date.now().toString());
-  }
+export default function StartQuizButton({ id }: StartQuizButtonProps) {
+  const router = useRouter();
 
-  const seed =
-    typeof window !== "undefined"
-      ? localStorage.getItem(`quiz-${id}-seed`)
-      : "";
+  const handleStart = () => {
+    const session = {
+      seed: crypto.randomUUID(),
+      startedAt: Date.now(),
+    };
 
-  return (
-    <Link href={`${id}/test?seed=${seed}`} onClick={handleStart}>
-      Comenzar test
-    </Link>
-  );
+    localStorage.setItem(`quiz-${id}-session`, JSON.stringify(session));
+
+    router.push(`${id}/test?seed=${session.seed}`);
+  };
+
+  return <button onClick={handleStart}>Comenzar test</button>;
 }
