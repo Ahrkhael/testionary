@@ -1,32 +1,18 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 
-export default function useTimer(storageKey: string) {
+export default function useTimer(startedAt: number | null) {
   const [seconds, setSeconds] = useState(0);
   const [isRunning, setIsRunning] = useState(true);
 
-  const startedAt = useRef<number | null>(null);
-
   useEffect(() => {
-    const stored = localStorage.getItem(storageKey);
-
-    if (stored) {
-      startedAt.current = Number(stored);
-    } else {
-      const now = Date.now();
-
-      localStorage.setItem(storageKey, now.toString());
-
-      startedAt.current = now;
+    if (!isRunning || startedAt === null) {
+      return;
     }
-  }, [storageKey]);
-
-  useEffect(() => {
-    if (!isRunning || startedAt.current !== null) return;
 
     const update = () => {
-      setSeconds(Math.floor((Date.now() - startedAt.current!) / 1000));
+      setSeconds(Math.floor((Date.now() - startedAt) / 1000));
     };
 
     update();
@@ -34,7 +20,7 @@ export default function useTimer(storageKey: string) {
     const interval = setInterval(update, 1000);
 
     return () => clearInterval(interval);
-  }, [isRunning, startedAt]);
+  }, [startedAt, isRunning]);
 
   const stop = () => setIsRunning(false);
 

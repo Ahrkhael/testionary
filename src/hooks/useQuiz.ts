@@ -2,6 +2,7 @@ import { useState } from "react";
 import type { Quiz, AnswerState } from "@/types/quiz";
 
 import useTimer from "./useTimer";
+import useQuizSession from "./useQuizSession";
 
 interface UserAnswer {
   selectedAnswerId: number | null;
@@ -91,7 +92,9 @@ export default function useQuiz(quiz: Quiz) {
   };
 
   // Timer del Quiz
-  const timer = useTimer(`quiz-${quiz.id}-startedAt`);
+  const session = useQuizSession(quiz.id);
+
+  const timer = useTimer(session?.startedAt ?? null);
 
   return {
     currentIndex,
