@@ -1,8 +1,11 @@
 "use client";
 
 import { useMemo } from "react";
+import type { QuizSession } from "@/types/quizSession";
 
-export default function useQuizSession(id: number | null) {
+export default function useQuizSession(
+  id: number | string,
+): QuizSession | null {
   return useMemo(() => {
     if (typeof window === "undefined") {
       return null;
@@ -14,6 +17,6 @@ export default function useQuizSession(id: number | null) {
       return null;
     }
 
-    return JSON.parse(stored);
+    return JSON.parse(stored) as QuizSession;
   }, [id]);
 }
