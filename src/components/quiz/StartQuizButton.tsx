@@ -13,6 +13,9 @@ export default function StartQuizButton({ id }: StartQuizButtonProps) {
     const session = {
       seed: crypto.randomUUID(),
       startedAt: Date.now(),
+      finishedAt: null,
+      elapsedTime: null,
+      score: null,
     };
 
     localStorage.setItem(`quiz-${id}-session`, JSON.stringify(session));

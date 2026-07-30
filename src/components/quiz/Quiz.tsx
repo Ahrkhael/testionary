@@ -4,9 +4,12 @@ import type { Quiz } from "@/types/quiz";
 
 import { QuizProvider } from "./QuizContext";
 
+import dynamic from "next/dynamic";
+
 import Question from "./Question";
 import Navigation from "./Navigation";
-import Timer from "./Timer";
+
+const Timer = dynamic(() => import("./Timer"), { ssr: false });
 
 interface QuizProps {
   quiz: Quiz;

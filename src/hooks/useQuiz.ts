@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import type { Quiz, AnswerState } from "@/types/quiz";
 
@@ -94,7 +96,12 @@ export default function useQuiz(quiz: Quiz) {
   // Timer del Quiz
   const session = useQuizSession(quiz.id);
 
-  const timer = useTimer(session?.startedAt ?? null);
+  const timer = useTimer(
+    quiz.id,
+    session?.startedAt ?? null,
+    session?.elapsedTime ?? null,
+    session?.finishedAt !== null,
+  );
 
   return {
     currentIndex,
