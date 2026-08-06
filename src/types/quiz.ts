@@ -14,7 +14,5 @@ export interface Question {
 
 export interface Quiz {
   id: number;
-  title: string;
-  description: string;
   questions: Question[];
 }
