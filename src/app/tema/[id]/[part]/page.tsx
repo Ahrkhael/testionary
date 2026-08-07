@@ -1,34 +1,29 @@
 import { notFound } from "next/navigation";
 import { quizRegistry } from "@/data/quizzes/registry";
-import Quiz from "@/components/quiz/Quiz";
-import prepareQuiz from "@/utils/prepareQuiz";
+
+import StartQuizButton from "@/components/quiz/StartQuizButton";
 
 type PageProps = {
   params: Promise<{
     id: string;
-  }>;
-  searchParams: Promise<{
-    seed?: string;
+    part: string;
   }>;
 };
 
-export default async function QuizPage({ params, searchParams }: PageProps) {
-  const { id } = await params;
-  const { seed } = await searchParams;
+export default async function QuizPage({ params }: PageProps) {
+  const { id, part } = await params;
 
-  const quiz = quizRegistry[id as keyof typeof quizRegistry];
+  const theme = quizRegistry[id as keyof typeof quizRegistry];
+
+  if (!theme) {
+    notFound();
+  }
+
+  const quiz = theme.parts[part as keyof typeof theme.parts];
 
   if (!quiz) {
     notFound();
   }
-
-  if (!seed) {
-    notFound();
-  }
-
-  const quizData = (await quiz.load()).default;
-
-  const preparedQuiz = prepareQuiz(quizData, seed);
 
   return (
     <div className="flex flex-col flex-1 items-center justify-center font-sans">
@@ -41,14 +36,30 @@ export default async function QuizPage({ params, searchParams }: PageProps) {
 
             <h1 className="text-4xl font-bold">{quiz.title}</h1>
 
-            <p className="">
+            <p>
               Pon a prueba tus conocimientos respondiendo las preguntas de este
               tema.
             </p>
           </header>
 
+          <div className="rounded-xl border border-slate-200 p-6 shadow-sm">
+            <h2 className="mb-4 text-xl font-semibold">Información</h2>
+
+            <div className="space-y-2">
+              <p>
+                <span className="font-medium">Tema: </span>
+                {quiz.title}
+              </p>
+
+              <p>
+                <span className="font-medium">Parte: </span>
+                {part}
+              </p>
+            </div>
+          </div>
+
           <div className="rounded-xl border border-dashed border-slate-300 p-8 text-center">
-            <Quiz quiz={preparedQuiz} />
+            <StartQuizButton id={id} />
           </div>
         </section>
       </main>
