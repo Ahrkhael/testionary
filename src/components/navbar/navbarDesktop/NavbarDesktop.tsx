@@ -25,7 +25,7 @@ const NavbarDesktop: FC = () => {
             href={`/tema/${quiz.id}`}
             className="text-xl hover:text-(--font-color-menu-secondary)"
           >
-            Tema {quiz.id}
+            {quiz.title}
           </Link>
         ))}
       </div>

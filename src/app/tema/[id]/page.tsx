@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { quizRegistry } from "@/data/quizzes/registry";
+import Link from "next/link";
 
 import StartQuizButton from "@/components/quiz/StartQuizButton";
 
@@ -53,6 +54,28 @@ export default async function QuizPage({ params }: PageProps) {
                 <span className="font-medium">ID: </span>
                 {id}
               </p>
+            </div>
+          </div>
+
+          <div className="rounded-xl border border-dashed border-slate-300 p-8">
+            <h2 className="mb-6 text-xl font-semibold text-center">
+              Selecciona una parte
+            </h2>
+
+            <div className="flex flex-col gap-4">
+              <nav>
+                <ul>
+                  {Object.entries(quiz.parts).map(([partId, part]) => (
+                    <li key={partId}>
+                      <Link href={`${id}/${partId}`}>
+                        <h2>
+                          Parte {partId}: {part.title}
+                        </h2>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
             </div>
           </div>
 
