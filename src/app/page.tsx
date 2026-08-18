@@ -25,8 +25,12 @@ export default function Home() {
               {quizzes.map((quiz) => (
                 <li key={quiz.id}>
                   <Link href={`tema/${quiz.id}`}>
-                    <h2>{quiz.title}</h2>
-                    <p>{quiz.description}</p>
+                    <div className="rounded-xl border border-slate-200 p-6 m-6 shadow-sm">
+                      <h2>
+                        Tema {quiz.id}: {quiz.title}
+                      </h2>
+                      <p>{quiz.description}</p>
+                    </div>
                   </Link>
                 </li>
               ))}
